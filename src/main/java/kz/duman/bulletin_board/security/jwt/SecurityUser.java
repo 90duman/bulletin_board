@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
-public class JwtUser implements UserDetails {
+public class SecurityUser implements UserDetails {
     private final Long id;
     private final String email;
     private final String password;
@@ -17,7 +17,7 @@ public class JwtUser implements UserDetails {
     private final LocalDateTime lastPasswordResetDate;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUser(
+    public SecurityUser(
             Long id,
             String email,
             String firstName,
@@ -95,5 +95,19 @@ public class JwtUser implements UserDetails {
     @JsonIgnore
     public LocalDateTime getLastPasswordResetDate() {
         return lastPasswordResetDate;
+    }
+
+    @Override
+    public String toString() {
+        return "JwtUser{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", enabled=" + enabled +
+                ", lastPasswordResetDate=" + lastPasswordResetDate +
+                ", authorities=" + authorities +
+                '}';
     }
 }
