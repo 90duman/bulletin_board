@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "bulletin_boards")
@@ -30,6 +31,12 @@ public class BulletinBoard extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
+
+    @Column(name = "closed_date_time")
+    private LocalDateTime closedDateTime;
+
+    @Column(name = "client_id")
+    private Long clientId;
 
     public enum Status {
         ACTIVE, REMOVED_PUBLICATION

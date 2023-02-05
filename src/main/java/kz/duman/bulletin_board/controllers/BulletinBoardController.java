@@ -49,4 +49,15 @@ public class BulletinBoardController {
                 .stream().map(BulletinBoardDTO::from).collect(Collectors.toList());
         return ResponseEntity.ok(boardDTOS);
     }
+
+    @ApiOperation("Request for the purchase of goods")
+    @PutMapping("/request")
+    public ResponseEntity<BulletinBoardDTO> requestPurchase(
+            @RequestParam Long boardId,
+            @RequestParam Long minPrice,
+            @AuthenticationPrincipal SecurityUser securityUser
+    ) {
+        var bulletinBoard = bulletinBoardService.requestPurchase(boardId, securityUser.getId(), minPrice);
+        return ResponseEntity.ok(BulletinBoardDTO.from(bulletinBoard));
+    }
 }

@@ -1,5 +1,6 @@
 package kz.duman.bulletin_board.service.impl;
 
+import kz.duman.bulletin_board.exception.BadRequestException;
 import kz.duman.bulletin_board.exception.NotFoundException;
 import kz.duman.bulletin_board.model.BulletinBoard;
 import kz.duman.bulletin_board.payload.NewBoardRequest;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -48,5 +50,20 @@ public class BulletinBoardServiceIml implements BulletinBoardService {
     @Override
     public List<BulletinBoard> findByNameContaining(String name) {
         return bulletinBoardRepository.findByNameContaining(name);
+    }
+
+    @Transactional
+    @Override
+    public BulletinBoard requestPurchase(Long boardId, Long userId, Long minPrice) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        LocalDateTime closedDateTime = dateTime.plusDays(5);
+        var bulletinBoard = bulletinBoardRepository.findById(boardId).orElseThrow(() -> new NotFoundException("Bulletin board not found"));
+        if (bulletinBoard.getMinPrice() >= minPrice) {
+            throw new BadRequestException("The offered price cannot be lower or equal to the minimum price");
+        }
+        bulletinBoard.setClientId(userId);
+        bulletinBoard.setClosedDateTime(closedDateTime);
+        bulletinBoard.setMinPrice(minPrice);
+        return bulletinBoardRepository.save(bulletinBoard);
     }
 }
