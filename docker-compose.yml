@@ -3,7 +3,6 @@ services:
   bulletin_board:
     image: postgres:11.15-alpine
     container_name: bulletin_board
-    command: [ "postgres", "-c", "logging_collector=on", "-c", "log_statement=all" ]
     environment:
       TZ: 'UTC'
       PGTZ: 'UTC'
