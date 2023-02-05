@@ -41,7 +41,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Bulletin board APIs")
-                .description("Service bulletin board for the sale of goods, working on the principle of auction")
+                .description("Сервисная доска объявлений по продаже товаров, работающая по принципу аукциона")
                 .version("0.0.1-SNAPSHOT")
                 .build();
     }

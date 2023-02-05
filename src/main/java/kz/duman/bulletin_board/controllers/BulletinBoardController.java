@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api(tags = "Bulletin board API", description = "api for ads")
+@Api(tags = "API доска объявлений", description = "api для доски объявлений")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/ads")
@@ -22,7 +22,7 @@ public class BulletinBoardController {
 
     private final BulletinBoardService bulletinBoardService;
 
-    @ApiOperation("Create an ad and post it on the bulletin board")
+    @ApiOperation("Создания объявления и размещение его на доске объявлений")
     @PostMapping
     public ResponseEntity<String> addNewBoard(
             @AuthenticationPrincipal SecurityUser securityUser,
@@ -32,7 +32,7 @@ public class BulletinBoardController {
         return ResponseEntity.ok("Ads successfully created");
     }
 
-    @ApiOperation("Get a list of ads")
+    @ApiOperation("Получить весь список обявлений")
     @GetMapping
     public ResponseEntity<List<BulletinBoardDTO>> getAllAbs() {
         var boardDTOS = bulletinBoardService.getAllAbs()
@@ -40,8 +40,8 @@ public class BulletinBoardController {
         return ResponseEntity.ok(boardDTOS);
     }
 
-    @ApiOperation("find a abs by name")
-    @GetMapping("/find")
+    @ApiOperation("Фильтр по названию обявлений")
+    @GetMapping("/filer")
     public ResponseEntity<List<BulletinBoardDTO>> findByNameContaining(
             @RequestParam("name") String name
     ) {
@@ -50,7 +50,7 @@ public class BulletinBoardController {
         return ResponseEntity.ok(boardDTOS);
     }
 
-    @ApiOperation("Request for the purchase of goods")
+    @ApiOperation("Запрос на покупку товара, предложение цены, участие в аукционе")
     @PutMapping("/request")
     public ResponseEntity<BulletinBoardDTO> requestPurchase(
             @RequestParam Long boardId,

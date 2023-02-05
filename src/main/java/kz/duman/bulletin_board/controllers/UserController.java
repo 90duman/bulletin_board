@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(tags = "Authorization API", description = "api for user authorization and registration")
+@Api(tags = "API пользователя", description = "api для аутентификации и регистрации пользователя")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/auth")
@@ -33,7 +33,7 @@ public class UserController {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    @ApiOperation("User authorization")
+    @ApiOperation("Аутентификация пользователя")
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(
             @RequestBody AuthRequestDto requestDto
@@ -46,7 +46,7 @@ public class UserController {
         }
     }
 
-    @ApiOperation("Register new user")
+    @ApiOperation("Регистрация нового пользователя")
     @PostMapping("/register")
     public ResponseEntity<UserDto> register(
             @Valid @RequestBody NewUserRequest request
