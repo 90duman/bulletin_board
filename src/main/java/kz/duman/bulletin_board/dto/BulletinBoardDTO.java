@@ -11,6 +11,7 @@ public class BulletinBoardDTO {
     private long minPrice;
     private String description;
     private String image;
+    private BulletinBoard.Status status;
     private UserDto user;
 
     public static BulletinBoardDTO from(BulletinBoard bulletinBoard) {
@@ -19,6 +20,7 @@ public class BulletinBoardDTO {
                 .minPrice(bulletinBoard.getMinPrice())
                 .description(bulletinBoard.getDescription())
                 .image(bulletinBoard.getImage())
+                .status(bulletinBoard.getStatus())
                 .user(UserDto.from(bulletinBoard.getUser()))
                 .build();
     }

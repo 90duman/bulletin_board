@@ -1,19 +1,14 @@
 package kz.duman.bulletin_board.service.impl;
 
-import kz.duman.bulletin_board.dto.AuthRequestDto;
 import kz.duman.bulletin_board.model.Role;
-import kz.duman.bulletin_board.model.Status;
 import kz.duman.bulletin_board.model.User;
 import kz.duman.bulletin_board.payload.NewUserRequest;
 import kz.duman.bulletin_board.repository.RoleRepository;
 import kz.duman.bulletin_board.repository.UserRepository;
-import kz.duman.bulletin_board.security.jwt.JwtTokenProvider;
 import kz.duman.bulletin_board.security.jwt.JwtUserFactory;
 import kz.duman.bulletin_board.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,9 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -54,7 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRoles.add(role);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRoles(userRoles);
-        user.setStatus(Status.ACTIVE);
+        user.setStatus(User.Status.ACTIVE);
         user.setEmail(request.getEmail());
         user.setLastName(request.getLastName());
         user.setFirstName(request.getFirstName());

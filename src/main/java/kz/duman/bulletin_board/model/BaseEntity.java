@@ -23,8 +23,4 @@ public abstract class BaseEntity implements Serializable {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    protected Status status;
 }

@@ -1,7 +1,6 @@
 package kz.duman.bulletin_board.security.jwt;
 
 import kz.duman.bulletin_board.model.Role;
-import kz.duman.bulletin_board.model.Status;
 import kz.duman.bulletin_board.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +22,7 @@ public final class JwtUserFactory {
                 user.getLastName(),
                 user.getPassword(),
                 mapToGrantedAuthorities(new ArrayList<>(user.getRoles())),
-                user.getStatus().equals(Status.ACTIVE),
+                user.getStatus().equals(User.Status.ACTIVE),
                 user.getUpdatedAt()
         );
     }

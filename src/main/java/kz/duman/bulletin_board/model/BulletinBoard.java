@@ -26,4 +26,12 @@ public class BulletinBoard extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
+    public enum Status {
+        ACTIVE, REMOVED_PUBLICATION
+    }
 }

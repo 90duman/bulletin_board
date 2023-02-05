@@ -1,7 +1,7 @@
 package kz.duman.bulletin_board.service.impl;
 
+import kz.duman.bulletin_board.exception.NotFoundException;
 import kz.duman.bulletin_board.model.BulletinBoard;
-import kz.duman.bulletin_board.model.Status;
 import kz.duman.bulletin_board.payload.NewBoardRequest;
 import kz.duman.bulletin_board.repository.BulletinBoardRepository;
 import kz.duman.bulletin_board.repository.UserRepository;
@@ -24,14 +24,15 @@ public class BulletinBoardServiceIml implements BulletinBoardService {
     @Transactional
     @Override
     public void addNewBoard(NewBoardRequest request, Long userId) {
-        var user = userRepository.findById(userId).get();
+        var user = userRepository.findById(userId).orElseThrow(() ->
+                new NotFoundException("User: %d not found".formatted(userId)));
         var board = new BulletinBoard();
         board.setName(request.getName());
         board.setMinPrice(request.getMinPrice());
         board.setDescription(request.getDescription());
         board.setImage(request.getImage());
         board.setUser(user);
-        board.setStatus(Status.ACTIVE);
+        board.setStatus(BulletinBoard.Status.ACTIVE);
         bulletinBoardRepository.save(board);
         log.info("Created new board: {}", board);
     }

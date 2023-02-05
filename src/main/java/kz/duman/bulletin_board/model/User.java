@@ -32,4 +32,12 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BulletinBoard> bulletinBoards;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
+    public enum Status {
+        ACTIVE, DELETED
+    }
 }
