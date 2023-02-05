@@ -21,8 +21,8 @@ public class BulletinBoard extends BaseEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "image", nullable = false)
-    private String image;
+    @Column(name = "image")
+    private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

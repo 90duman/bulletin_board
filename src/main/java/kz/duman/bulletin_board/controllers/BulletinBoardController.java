@@ -5,12 +5,12 @@ import io.swagger.annotations.ApiOperation;
 import kz.duman.bulletin_board.dto.BulletinBoardDTO;
 import kz.duman.bulletin_board.payload.NewBoardRequest;
 import kz.duman.bulletin_board.security.jwt.SecurityUser;
-import kz.duman.bulletin_board.service.BulletinBoardCorn;
 import kz.duman.bulletin_board.service.BulletinBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 public class BulletinBoardController {
 
     private final BulletinBoardService bulletinBoardService;
-    private final BulletinBoardCorn bulletinBoardCorn;
 
     @ApiOperation("Создания объявления и размещение его на доске объявлений")
     @PostMapping
@@ -32,6 +31,16 @@ public class BulletinBoardController {
     ) {
         bulletinBoardService.addNewBoard(request, securityUser.getId());
         return ResponseEntity.ok("Ads successfully created");
+    }
+
+    @ApiOperation("Добавить изображение по ID обявления")
+    @PutMapping("/image/{id}")
+    public ResponseEntity<String> addImagesByAbsId(
+            @PathVariable Long id,
+            @RequestParam("image") MultipartFile multipartFile
+    ) {
+        bulletinBoardService.addImagesByAbsId(multipartFile, id);
+        return ResponseEntity.ok("Image successfully added");
     }
 
     @ApiOperation("Получить весь список обявлений")

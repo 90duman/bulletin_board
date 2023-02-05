@@ -12,7 +12,7 @@ public class BulletinBoardDTO {
     private String name;
     private long minPrice;
     private String description;
-    private String image;
+    private byte[] image;
     private BulletinBoard.Status status;
     private LocalDateTime closedDateTime;
     private Long clientId;
@@ -23,7 +23,7 @@ public class BulletinBoardDTO {
                 .name(bulletinBoard.getName())
                 .minPrice(bulletinBoard.getMinPrice())
                 .description(bulletinBoard.getDescription())
-                .image(bulletinBoard.getImage())
+              //  .image(bulletinBoard.getImage())
                 .status(bulletinBoard.getStatus())
                 .closedDateTime(bulletinBoard.getClosedDateTime())
                 .clientId(bulletinBoard.getClientId())

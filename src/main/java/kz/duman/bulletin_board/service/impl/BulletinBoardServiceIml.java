@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,11 +34,22 @@ public class BulletinBoardServiceIml implements BulletinBoardService {
         board.setName(request.getName());
         board.setMinPrice(request.getMinPrice());
         board.setDescription(request.getDescription());
-        board.setImage(request.getImage());
         board.setUser(user);
         board.setStatus(BulletinBoard.Status.ACTIVE);
         bulletinBoardRepository.save(board);
         log.info("Created new board: {}", board);
+    }
+
+    @Override
+    public void addImagesByAbsId(MultipartFile multipartFile, Long id) {
+        try {
+            var bulletinBoard = bulletinBoardRepository.findByIdAndStatus(id, BulletinBoard.Status.ACTIVE).orElseThrow(() ->
+                    new NotFoundException("Abs Id: %d not found".formatted(id)));
+            bulletinBoard.setImage(multipartFile.getBytes());
+            bulletinBoardRepository.save(bulletinBoard);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Transactional(readOnly = true)
