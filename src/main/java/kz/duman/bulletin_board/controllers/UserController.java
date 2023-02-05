@@ -23,14 +23,13 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(tags = "API пользователя", description = "api для аутентификации и регистрации пользователя")
+@Api(tags = "API Аутентификации и регистрации", description = "api для аутентификации и регистрации пользователя")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/auth")
 public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
-
     private final JwtTokenProvider jwtTokenProvider;
 
     @ApiOperation("Аутентификация пользователя")
