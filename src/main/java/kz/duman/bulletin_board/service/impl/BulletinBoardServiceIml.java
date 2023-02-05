@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -29,5 +31,12 @@ public class BulletinBoardServiceIml implements BulletinBoardService {
         board.setUser(user);
         board.setStatus(Status.ACTIVE);
         bulletinBoardRepository.save(board);
+        log.info("Created new board: {}", board);
+    }
+
+    @Override
+    public List<BulletinBoard> getAllAbs() {
+        log.info("Get a list of ads");
+        return bulletinBoardRepository.findAll();
     }
 }

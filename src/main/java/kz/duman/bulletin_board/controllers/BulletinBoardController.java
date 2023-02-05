@@ -2,16 +2,17 @@ package kz.duman.bulletin_board.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import kz.duman.bulletin_board.dto.BulletinBoardDTO;
 import kz.duman.bulletin_board.payload.NewBoardRequest;
 import kz.duman.bulletin_board.security.jwt.SecurityUser;
 import kz.duman.bulletin_board.service.BulletinBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Api(tags = "Bulletin board API", description = "api for ads")
 @RequiredArgsConstructor
@@ -27,7 +28,15 @@ public class BulletinBoardController {
             @AuthenticationPrincipal SecurityUser securityUser,
             @RequestBody NewBoardRequest request
     ) {
-         bulletinBoardService.addNewBoard(request, securityUser.getId());
-         return ResponseEntity.ok("Ads successfully created");
+        bulletinBoardService.addNewBoard(request, securityUser.getId());
+        return ResponseEntity.ok("Ads successfully created");
+    }
+
+    @ApiOperation("Get a list of ads")
+    @GetMapping
+    public ResponseEntity<List<BulletinBoardDTO>> getAllAbs() {
+        var boardDTOS = bulletinBoardService.getAllAbs()
+                .stream().map(BulletinBoardDTO::from).collect(Collectors.toList());
+        return ResponseEntity.ok(boardDTOS);
     }
 }
