@@ -10,8 +10,8 @@ spring:
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: none
-    show-sql: false
+      ddl-auto: create
+    show-sql: true
 
 jwt:
   token:
