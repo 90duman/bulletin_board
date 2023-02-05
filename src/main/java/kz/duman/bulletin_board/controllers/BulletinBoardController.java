@@ -39,4 +39,14 @@ public class BulletinBoardController {
                 .stream().map(BulletinBoardDTO::from).collect(Collectors.toList());
         return ResponseEntity.ok(boardDTOS);
     }
+
+    @ApiOperation("find a abs by name")
+    @GetMapping("/find")
+    public ResponseEntity<List<BulletinBoardDTO>> findByNameContaining(
+            @RequestParam("name") String name
+    ) {
+        var boardDTOS = bulletinBoardService.findByNameContaining(name)
+                .stream().map(BulletinBoardDTO::from).collect(Collectors.toList());
+        return ResponseEntity.ok(boardDTOS);
+    }
 }
