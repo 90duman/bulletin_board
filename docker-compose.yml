@@ -1,0 +1,29 @@
+version: '3.4'
+services:
+  bulletin_board:
+    image: postgres:11.15-alpine
+    container_name: bulletin_board
+    command: [ "postgres", "-c", "logging_collector=on", "-c", "log_statement=all" ]
+    environment:
+      TZ: 'UTC'
+      PGTZ: 'UTC'
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+
+  app:
+    container_name: app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://bulletin_board:5432/postgres"
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "postgres"
+      SPRING_JPA_SHOW_SQL: "true"
+    depends_on:
+      - bulletin_board
+    ports:
+      - "127.0.0.1:8085:8085"
