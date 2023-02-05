@@ -57,18 +57,22 @@ public class BulletinBoardServiceIml implements BulletinBoardService {
     public BulletinBoard requestPurchase(Long boardId, Long userId, Long minPrice) {
         LocalDateTime dateTime = LocalDateTime.now();
         LocalDateTime closedDateTime = dateTime.plusDays(5);
-        var bulletinBoard = bulletinBoardRepository.findById(boardId).orElseThrow(() -> new NotFoundException("Bulletin board not found"));
+        var bulletinBoard = bulletinBoardRepository.findByIdAndStatus(boardId, BulletinBoard.Status.ACTIVE).orElseThrow(() -> new NotFoundException("Bulletin board not found"));
         if (bulletinBoard.getMinPrice() >= minPrice) {
             throw new BadRequestException("The offered price cannot be lower or equal to the minimum price");
         }
-        var user = userRepository.findById(bulletinBoard.getClientId()).orElse(null);
-        if (user != null) {
-            log.warn("Отправка email на эл.адрес: {}", user.getEmail());
-            log.warn("Уважемый клиент, ваше ценовае предлажение была перебита, на сумму: {}", minPrice);
-        }
+        var board = bulletinBoardRepository.findById(boardId).orElse(null);
+        sendingNotificationToEmail(minPrice, board);
         bulletinBoard.setClientId(userId);
         bulletinBoard.setClosedDateTime(closedDateTime);
         bulletinBoard.setMinPrice(minPrice);
         return bulletinBoardRepository.save(bulletinBoard);
+    }
+
+    private static void sendingNotificationToEmail(Long minPrice, BulletinBoard board) {
+        if (board != null && board.getClosedDateTime() != null) {
+            log.warn("Отправка email на эл.адрес: {}", board.getUser().getEmail());
+            log.warn("Уважемый клиент, ваше ценовае предлажение была перебита, на сумму: {}", minPrice);
+        }
     }
 }

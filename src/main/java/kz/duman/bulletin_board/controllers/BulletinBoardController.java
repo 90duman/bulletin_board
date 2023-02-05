@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import kz.duman.bulletin_board.dto.BulletinBoardDTO;
 import kz.duman.bulletin_board.payload.NewBoardRequest;
 import kz.duman.bulletin_board.security.jwt.SecurityUser;
+import kz.duman.bulletin_board.service.BulletinBoardCorn;
 import kz.duman.bulletin_board.service.BulletinBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class BulletinBoardController {
 
     private final BulletinBoardService bulletinBoardService;
+    private final BulletinBoardCorn bulletinBoardCorn;
 
     @ApiOperation("Создания объявления и размещение его на доске объявлений")
     @PostMapping
@@ -60,4 +62,5 @@ public class BulletinBoardController {
         var bulletinBoard = bulletinBoardService.requestPurchase(boardId, securityUser.getId(), minPrice);
         return ResponseEntity.ok(BulletinBoardDTO.from(bulletinBoard));
     }
+
 }
