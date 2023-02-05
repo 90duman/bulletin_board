@@ -84,7 +84,7 @@ public class BulletinBoardServiceIml implements BulletinBoardService {
 
     private static void sendingNotificationToEmail(Long minPrice, BulletinBoard board) {
         if (board != null && board.getClosedDateTime() != null) {
-            log.warn("Отправка email на эл.адрес: {}", board.getUser().getEmail());
+            log.warn("Отправка уведомления email на эл.адрес: {}", board.getUser().getEmail());
             log.warn("Уважемый клиент, ваше ценовае предлажение была перебита, на сумму: {}", minPrice);
         }
     }
